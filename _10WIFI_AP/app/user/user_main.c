@@ -271,8 +271,8 @@ void SOFT_TIMER0_CB(void){
 /*
 	软件定时器初始化
 	set_time:	设置软件定时器的时间	单位 ms
-	mod:		软件定时器的模式 			0：一次模式
-									1：重复模式
+	mod:		软件定时器的模式 		0：一次模式
+										1：重复模式
 */
 void ICACHE_FLASH_ATTR 
 SOFT_TIMER_INIT(uint32_t set_time,uint8_t mod){

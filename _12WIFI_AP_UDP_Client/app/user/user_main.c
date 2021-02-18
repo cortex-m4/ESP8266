@@ -49,8 +49,8 @@
 #define TASK_USE_DEBUG	0			//TASK任务的使用测试
 #define MY_FLASH_USE	0			//FLASH使用调试
 
-#define ESP8266_AP_SSID		"MY_ESP8266"
-#define ESP8266_AP_PASS		"123456789"
+#define ESP8266_AP_SSID		"muyuanZA"
+#define ESP8266_AP_PASS		"muyuan2021"
 
 #define MSM_TASK_LEN	2			//系统任务接受的数量
 
@@ -218,11 +218,11 @@ ESP8266_UDP_NetCon_init(void){
 		开辟内存
 	*/
 	ST_NetCon.proto.udp->local_port=114;		//设置本地端口
-	ST_NetCon.proto.udp->remote_port=8888;		//设置目标服务器端口
+	ST_NetCon.proto.udp->remote_port=8080;		//设置目标服务器端口
 	ST_NetCon.proto.udp->remote_ip[0]=192;		//设置目标IP地址
 	ST_NetCon.proto.udp->remote_ip[1]=168;
-	ST_NetCon.proto.udp->remote_ip[2]=65;
-	ST_NetCon.proto.udp->remote_ip[3]=1;
+	ST_NetCon.proto.udp->remote_ip[2]=4;
+	ST_NetCon.proto.udp->remote_ip[3]=2;
 	//u8 remote_ip[4]=[192,168,4,2];		
 	//os_memcpy(ST_NetCon.proto.udp->remote_ip,remote_ip,4);		//拷贝内存
 	espconn_regist_sentcb(&ST_NetCon,ESP8266_WIFI_Send_Cb);

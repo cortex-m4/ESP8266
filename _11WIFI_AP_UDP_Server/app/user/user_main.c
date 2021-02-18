@@ -49,8 +49,8 @@
 #define TASK_USE_DEBUG	0			//TASK任务的使用测试
 #define MY_FLASH_USE	0			//FLASH使用调试
 
-#define ESP8266_AP_SSID		"MY_ESP8266"
-#define ESP8266_AP_PASS		"123456789"
+#define ESP8266_AP_SSID		"muyuanZA"
+#define ESP8266_AP_PASS		"muyuan2021"
 
 #define MSM_TASK_LEN	2			//系统任务接受的数量
 
@@ -149,10 +149,10 @@ void ESP8266_WIFI_Recv_Cb(void *arg, char *pdata, unsigned short len){
 
 
 	//根据数据设置LED的亮灭
-	if(pdata[0]=='k')LED_ON;
-	else if(pdata[0]=='g')LED_OFF;
+	if(pdata[0]=='k'||pdata[0]=='K')LED_ON;
+	else if(pdata[0]=='g'||pdata[0]=='G')LED_OFF;
 
-	os_printf("\esp8266 rev data=%s\n",pdata);
+	os_printf("\nesp8266 rev data=%s\n",pdata);
 
 	//获取远端信息，获取是谁发的
 	if(espconn_get_connection_info(T_arg,&P_port_info,0)==ESPCONN_OK){
@@ -205,8 +205,8 @@ ESP8266_UDP_NetCon_init(void){
 	ST_NetCon.type=ESPCONN_UDP;		//通信协议选择UDP
 	ST_NetCon.proto.udp=&ST_UDP;	//申请内存
 
-	ST_NetCon.proto.udp->local_port=114;
-									//设置本地端口
+	ST_NetCon.proto.udp->local_port=114;//设置本地端口
+									
 	espconn_regist_sentcb(&ST_NetCon,ESP8266_WIFI_Send_Cb);
 	espconn_regist_recvcb(&ST_NetCon,ESP8266_WIFI_Recv_Cb);
 		//espconn_sent_callback

@@ -9006,12 +9006,6 @@ user_init(void)
 40206641:	600007        	bnone	a0, a0, 402066a5 <gpio16_input_conf+0x5>
 
 40206644 <gpio16_output_conf>:
-#include "driver/gpio16.h"
-
-void ICACHE_FLASH_ATTR
-gpio16_output_conf(void)
-{
-    WRITE_PERI_REG(PAD_XPD_DCDC_CONF,
 40206644:	fffd21        	l32r	a2, 40206638 <user_init+0x2c>
 40206647:	bcaf32        	movi	a3, -68
 4020664a:	0020c0        	memw
@@ -9021,9 +9015,6 @@ gpio16_output_conf(void)
 40206654:	204430        	or	a4, a4, a3
 40206657:	0020c0        	memw
 4020665a:	0249      	s32i.n	a4, a2, 0
-                   (READ_PERI_REG(PAD_XPD_DCDC_CONF) & 0xffffffbc) | (uint32)0x1); 	// mux configuration for XPD_DCDC to output rtc_gpio0
-
-    WRITE_PERI_REG(RTC_GPIO_CONF,
 4020665c:	fff821        	l32r	a2, 4020663c <user_init+0x30>
 4020665f:	e47c      	movi.n	a4, -2
 40206661:	0020c0        	memw
@@ -9031,9 +9022,6 @@ gpio16_output_conf(void)
 40206666:	104540        	and	a4, a5, a4
 40206669:	0020c0        	memw
 4020666c:	0249      	s32i.n	a4, a2, 0
-                   (READ_PERI_REG(RTC_GPIO_CONF) & (uint32)0xfffffffe) | (uint32)0x0);	//mux configuration for out enable
-
-    WRITE_PERI_REG(RTC_GPIO_ENABLE,
 4020666e:	fff421        	l32r	a2, 40206640 <user_init+0x34>
 40206671:	0020c0        	memw
 40206674:	0248      	l32i.n	a4, a2, 0
@@ -9045,12 +9033,6 @@ gpio16_output_conf(void)
 40206682:	316000        	srai	a6, a0, 16
 
 40206684 <gpio16_output_set>:
-}
-
-void ICACHE_FLASH_ATTR
-gpio16_output_set(uint8 value)
-{
-    WRITE_PERI_REG(RTC_GPIO_OUT,
 40206684:	ffff31        	l32r	a3, 40206680 <gpio16_output_conf+0x3c>
 40206687:	e57c      	movi.n	a5, -2
 40206689:	0020c0        	memw
@@ -9064,12 +9046,6 @@ gpio16_output_set(uint8 value)
 	...
 
 402066a0 <gpio16_input_conf>:
-}
-
-void ICACHE_FLASH_ATTR
-gpio16_input_conf(void)
-{
-    WRITE_PERI_REG(PAD_XPD_DCDC_CONF,
 402066a0:	ffe621        	l32r	a2, 40206638 <user_init+0x2c>
 402066a3:	bcaf32        	movi	a3, -68
 402066a6:	0020c0        	memw
@@ -9079,9 +9055,6 @@ gpio16_input_conf(void)
 402066b0:	203340        	or	a3, a3, a4
 402066b3:	0020c0        	memw
 402066b6:	0239      	s32i.n	a3, a2, 0
-                   (READ_PERI_REG(PAD_XPD_DCDC_CONF) & 0xffffffbc) | (uint32)0x1); 	// mux configuration for XPD_DCDC and rtc_gpio0 connection
-
-    WRITE_PERI_REG(RTC_GPIO_CONF,
 402066b8:	ffe121        	l32r	a2, 4020663c <user_init+0x30>
 402066bb:	e37c      	movi.n	a3, -2
 402066bd:	0020c0        	memw
@@ -9089,9 +9062,6 @@ gpio16_input_conf(void)
 402066c2:	104430        	and	a4, a4, a3
 402066c5:	0020c0        	memw
 402066c8:	0249      	s32i.n	a4, a2, 0
-                   (READ_PERI_REG(RTC_GPIO_CONF) & (uint32)0xfffffffe) | (uint32)0x0);	//mux configuration for out enable
-
-    WRITE_PERI_REG(RTC_GPIO_ENABLE,
 402066ca:	ffdd21        	l32r	a2, 40206640 <user_init+0x34>
 402066cd:	0020c0        	memw
 402066d0:	0248      	l32i.n	a4, a2, 0
@@ -9103,16 +9073,9 @@ gpio16_input_conf(void)
 402066de:	216000        	srai	a6, a0, 0
 
 402066e0 <gpio16_input_get>:
-}
-
-uint8 ICACHE_FLASH_ATTR
-gpio16_input_get(void)
-{
-    return (uint8)(READ_PERI_REG(RTC_GPIO_IN_DATA) & 1);
 402066e0:	ffff21        	l32r	a2, 402066dc <gpio16_input_conf+0x3c>
 402066e3:	0020c0        	memw
 402066e6:	0228      	l32i.n	a2, a2, 0
-}
 402066e8:	042020        	extui	a2, a2, 0, 1
 402066eb:	f00d      	ret.n
 402066ed:	000000        	ill
@@ -9142,20 +9105,12 @@ gpio16_input_get(void)
 40206723:	c11260        	mul16u	a1, a2, a6
 
 40206724 <uart_config>:
- * Parameters   : uart_no, use UART0 or UART1 defined ahead
- * Returns      : NONE
-*******************************************************************************/
-LOCAL void ICACHE_FLASH_ATTR
-uart_config(uint8 uart_no)
-{
 40206724:	f0c112        	addi	a1, a1, -16
 40206727:	11d9      	s32i.n	a13, a1, 4
 40206729:	3109      	s32i.n	a0, a1, 12
 4020672b:	21c9      	s32i.n	a12, a1, 8
 4020672d:	02dd      	mov.n	a13, a2
-    if (uart_no == UART1){
 4020672f:	161266        	bnei	a2, 1, 40206749 <uart_config+0x25>
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO2_U, FUNC_U1TXD_BK);
 40206732:	ffef21        	l32r	a2, 402066f0 <gpio16_input_get+0x10>
 40206735:	cfae32        	movi	a3, 0xfffffecf
 40206738:	0020c0        	memw
@@ -9165,15 +9120,11 @@ uart_config(uint8 uart_no)
 40206742:	203340        	or	a3, a3, a4
 40206745:	000b46        	j	40206776 <uart_config+0x52>
 40206748:	ea3100        	excw
-    }else{
-        /* rcv_buff size if 0x100 */
-        ETS_UART_INTR_ATTACH(uart0_rx_intr_handler,  &(UartDev.rcv_buff));
 4020674b:	ff          	.byte 0xff
 4020674c:	ffeb41        	l32r	a4, 402066f8 <gpio16_input_get+0x18>
 4020674f:	05a022        	movi	a2, 5
 40206752:	ea3601        	l32r	a0, 4020102c <_irom0_text_start+0x1c>
 40206755:	0000c0        	callx0	a0
-        PIN_PULLUP_DIS(PERIPHS_IO_MUX_U0TXD_U);
 40206758:	ffe921        	l32r	a2, 402066fc <gpio16_input_get+0x1c>
 4020675b:	7faf32        	movi	a3, -129
 4020675e:	0020c0        	memw
@@ -9181,32 +9132,13 @@ uart_config(uint8 uart_no)
 40206763:	103430        	and	a3, a4, a3
 40206766:	0020c0        	memw
 40206769:	0239      	s32i.n	a3, a2, 0
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0TXD_U, FUNC_U0TXD);
 4020676b:	0020c0        	memw
 4020676e:	0248      	l32i.n	a4, a2, 0
 40206770:	cfae32        	movi	a3, 0xfffffecf
 40206773:	103430        	and	a3, a4, a3
-        #endif
-	#if UART_HW_CTS
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTCK_U, FUNC_U0CTS);   //HW FLOW CONTROL CTS PIN
-        #endif
-    }
-    uart_div_modify(uart_no, UART_CLK_FREQ / (UartDev.baut_rate));//SET BAUDRATE
 40206776:	ffe2c1        	l32r	a12, 40206700 <gpio16_input_get+0x20>
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO2_U, FUNC_U1TXD_BK);
-    }else{
-        /* rcv_buff size if 0x100 */
-        ETS_UART_INTR_ATTACH(uart0_rx_intr_handler,  &(UartDev.rcv_buff));
-        PIN_PULLUP_DIS(PERIPHS_IO_MUX_U0TXD_U);
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_U0TXD_U, FUNC_U0TXD);
 40206779:	0020c0        	memw
 4020677c:	0239      	s32i.n	a3, a2, 0
-        #endif
-	#if UART_HW_CTS
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTCK_U, FUNC_U0CTS);   //HW FLOW CONTROL CTS PIN
-        #endif
-    }
-    uart_div_modify(uart_no, UART_CLK_FREQ / (UartDev.baut_rate));//SET BAUDRATE
 4020677e:	002c32        	l32i	a3, a12, 0
 40206781:	ffe021        	l32r	a2, 40206704 <gpio16_input_get+0x24>
 40206784:	ea8601        	l32r	a0, 4020119c <_irom0_text_start+0x18c>
@@ -9215,8 +9147,6 @@ uart_config(uint8 uart_no)
 4020678c:	0d2d      	mov.n	a2, a13
 4020678e:	ea2601        	l32r	a0, 40201028 <_irom0_text_start+0x18>
 40206791:	0000c0        	callx0	a0
-    
-    WRITE_PERI_REG(UART_CONF0(uart_no), ((UartDev.exist_parity & UART_PARITY_EN_M)  <<  UART_PARITY_EN_S) //SET BIT AND PARITY MODE
 40206794:	2c58      	l32i.n	a5, a12, 8
 40206796:	4c48      	l32i.n	a4, a12, 16
 40206798:	045050        	extui	a5, a5, 0, 1
@@ -9238,19 +9168,12 @@ uart_config(uint8 uart_no)
 402067c5:	204450        	or	a4, a4, a5
 402067c8:	0020c0        	memw
 402067cb:	0249      	s32i.n	a4, a2, 0
-                                                                        | ((UartDev.parity & UART_PARITY_M)  <<UART_PARITY_S )
-                                                                        | ((UartDev.stop_bits & UART_STOP_BIT_NUM) << UART_STOP_BIT_NUM_S)
-                                                                        | ((UartDev.data_bits & UART_BIT_NUM) << UART_BIT_NUM_S));
-    
-    //clear rx and tx fifo,not ready
-    SET_PERI_REG_MASK(UART_CONF0(uart_no), UART_RXFIFO_RST | UART_TXFIFO_RST);    //RESET FIFO
 402067cd:	0020c0        	memw
 402067d0:	0258      	l32i.n	a5, a2, 0
 402067d2:	ffce41        	l32r	a4, 4020670c <gpio16_input_get+0x2c>
 402067d5:	204540        	or	a4, a5, a4
 402067d8:	0020c0        	memw
 402067db:	0249      	s32i.n	a4, a2, 0
-    CLEAR_PERI_REG_MASK(UART_CONF0(uart_no), UART_RXFIFO_RST | UART_TXFIFO_RST);
 402067dd:	0020c0        	memw
 402067e0:	0258      	l32i.n	a5, a2, 0
 402067e2:	ffcb41        	l32r	a4, 40206710 <gpio16_input_get+0x30>
@@ -9258,29 +9181,11 @@ uart_config(uint8 uart_no)
 402067e8:	0020c0        	memw
 402067eb:	0249      	s32i.n	a4, a2, 0
 402067ed:	ffc921        	l32r	a2, 40206714 <gpio16_input_get+0x34>
-    
-    if (uart_no == UART0){
-        //set rx fifo trigger
-        WRITE_PERI_REG(UART_CONF1(uart_no),
 402067f0:	232a      	add.n	a2, a3, a2
-    
-    //clear rx and tx fifo,not ready
-    SET_PERI_REG_MASK(UART_CONF0(uart_no), UART_RXFIFO_RST | UART_TXFIFO_RST);    //RESET FIFO
-    CLEAR_PERI_REG_MASK(UART_CONF0(uart_no), UART_RXFIFO_RST | UART_TXFIFO_RST);
-    
-    if (uart_no == UART0){
 402067f2:	addc      	bnez.n	a13, 40206810 <uart_config+0xec>
-        //set rx fifo trigger
-        WRITE_PERI_REG(UART_CONF1(uart_no),
 402067f4:	ffc941        	l32r	a4, 40206718 <gpio16_input_get+0x38>
 402067f7:	0020c0        	memw
 402067fa:	0249      	s32i.n	a4, a2, 0
-        UART_RX_TOUT_EN|
-        ((0x10 & UART_TXFIFO_EMPTY_THRHD)<<UART_TXFIFO_EMPTY_THRHD_S));//wjl 
-        #if UART_HW_CTS
-        SET_PERI_REG_MASK( UART_CONF0(uart_no),UART_TX_FLOW_EN);  //add this sentense to add a tx flow control via MTCK( CTS )
-        #endif
-        SET_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_TOUT_INT_ENA |UART_FRM_ERR_INT_ENA);
 402067fc:	ffc821        	l32r	a2, 4020671c <gpio16_input_get+0x3c>
 402067ff:	08a142        	movi	a4, 0x108
 40206802:	232a      	add.n	a2, a3, a2
@@ -9289,85 +9194,48 @@ uart_config(uint8 uart_no)
 40206809:	204540        	or	a4, a5, a4
 4020680c:	000186        	j	40206816 <uart_config+0xf2>
 4020680f:	0c4200        	excw
-    }else{
-        WRITE_PERI_REG(UART_CONF1(uart_no),((UartDev.rcv_buff.TrigLvl & UART_RXFIFO_FULL_THRHD) << UART_RXFIFO_FULL_THRHD_S));//TrigLvl default val == 1
 40206812:	4028      	l32i.n	a2, a0, 16
 40206814:	c06440        	sub	a6, a4, a4
 40206817:	490020        	excw
 4020681a:	c12102        	l32i	a0, a1, 0x304
-    }
-    //clear all interrupt
-    WRITE_PERI_REG(UART_INT_CLR(uart_no), 0xffff);
 4020681d:	ff          	.byte 0xff
 4020681e:	ee1941        	l32r	a4, 40202084 <system_pp_recycle_rx_pkt+0x14>
 40206821:	232a      	add.n	a2, a3, a2
 40206823:	0020c0        	memw
 40206826:	0249      	s32i.n	a4, a2, 0
-    //enable rx_interrupt
-    SET_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_FULL_INT_ENA|UART_RXFIFO_OVF_INT_ENA);
 40206828:	ffbd21        	l32r	a2, 4020671c <gpio16_input_get+0x3c>
-}
 4020682b:	3108      	l32i.n	a0, a1, 12
-        WRITE_PERI_REG(UART_CONF1(uart_no),((UartDev.rcv_buff.TrigLvl & UART_RXFIFO_FULL_THRHD) << UART_RXFIFO_FULL_THRHD_S));//TrigLvl default val == 1
-    }
-    //clear all interrupt
-    WRITE_PERI_REG(UART_INT_CLR(uart_no), 0xffff);
-    //enable rx_interrupt
-    SET_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_FULL_INT_ENA|UART_RXFIFO_OVF_INT_ENA);
 4020682d:	332a      	add.n	a3, a3, a2
 4020682f:	0020c0        	memw
 40206832:	0348      	l32i.n	a4, a3, 0
 40206834:	121c      	movi.n	a2, 17
 40206836:	202420        	or	a2, a4, a2
-}
 40206839:	21c8      	l32i.n	a12, a1, 8
 4020683b:	11d8      	l32i.n	a13, a1, 4
-        WRITE_PERI_REG(UART_CONF1(uart_no),((UartDev.rcv_buff.TrigLvl & UART_RXFIFO_FULL_THRHD) << UART_RXFIFO_FULL_THRHD_S));//TrigLvl default val == 1
-    }
-    //clear all interrupt
-    WRITE_PERI_REG(UART_INT_CLR(uart_no), 0xffff);
-    //enable rx_interrupt
-    SET_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_FULL_INT_ENA|UART_RXFIFO_OVF_INT_ENA);
 4020683d:	0020c0        	memw
 40206840:	0329      	s32i.n	a2, a3, 0
-}
 40206842:	10c112        	addi	a1, a1, 16
 40206845:	f00d      	ret.n
 40206847:	1c8000        	excw
 4020684a:	124010        	excw
 
 4020684c <uart1_write_char>:
- * Parameters   : char c - character to tx
- * Returns      : NONE
-*******************************************************************************/
-LOCAL void ICACHE_FLASH_ATTR
-uart1_write_char(char c)
-{
 4020684c:	f0c112        	addi	a1, a1, -16
 4020684f:	21c9      	s32i.n	a12, a1, 8
 40206851:	3109      	s32i.n	a0, a1, 12
 40206853:	74c020        	extui	a12, a2, 0, 8
-    if (c == '\n'){
 40206856:	0f9c66        	bnei	a12, 10, 40206869 <uart1_write_char+0x1d>
-        uart_tx_one_char(UART1, '\r');
 40206859:	d30c      	movi.n	a3, 13
 4020685b:	01a022        	movi	a2, 1
 4020685e:	fffa01        	l32r	a0, 40206848 <uart_config+0x124>
 40206861:	0000c0        	callx0	a0
 40206864:	000186        	j	4020686e <uart1_write_char+0x22>
 40206867:	0c0000        	excw
-        uart_tx_one_char(UART1, '\n');
-    }else if (c == '\r'){
 4020686a:	1c27d2        	l32i	a13, a7, 112
 4020686d:	0c09      	s32i.n	a0, a12, 0
-    
-    }else{
-        uart_tx_one_char(UART1, c);
 4020686f:	0c3d12        	excw
 40206872:	fff501        	l32r	a0, 40206848 <uart_config+0x124>
 40206875:	0000c0        	callx0	a0
-    }
-}
 40206878:	3108      	l32i.n	a0, a1, 12
 4020687a:	21c8      	l32i.n	a12, a1, 8
 4020687c:	10c112        	addi	a1, a1, 16
@@ -9375,12 +9243,6 @@ uart1_write_char(char c)
 40206881:	000000        	ill
 
 40206884 <uart0_tx_buffer>:
- *                uint16 len - buffer len
- * Returns      :
-*******************************************************************************/
-void ICACHE_FLASH_ATTR
-uart0_tx_buffer(uint8 *buf, uint16 len)
-{
 40206884:	f0c112        	addi	a1, a1, -16
 40206887:	21c9      	s32i.n	a12, a1, 8
 40206889:	11d9      	s32i.n	a13, a1, 4
@@ -9388,30 +9250,16 @@ uart0_tx_buffer(uint8 *buf, uint16 len)
 4020688d:	3109      	s32i.n	a0, a1, 12
 4020688f:	02dd      	mov.n	a13, a2
 40206891:	f4e030        	extui	a14, a3, 0, 16
-    uint16 i;
-    for (i = 0; i < len; i++)
 40206894:	02cd      	mov.n	a12, a2
 40206896:	000306        	j	402068a6 <uart0_tx_buffer+0x22>
-    {
-        uart_tx_one_char(UART0, buf[i]);
 40206899:	000c32        	l8ui	a3, a12, 0
 4020689c:	020c      	movi.n	a2, 0
 4020689e:	ffea01        	l32r	a0, 40206848 <uart_config+0x124>
 402068a1:	0000c0        	callx0	a0
 402068a4:	cc1b      	addi.n	a12, a12, 1
 402068a6:	c02cd0        	sub	a2, a12, a13
-*******************************************************************************/
-void ICACHE_FLASH_ATTR
-uart0_tx_buffer(uint8 *buf, uint16 len)
-{
-    uint16 i;
-    for (i = 0; i < len; i++)
 402068a9:	f42020        	extui	a2, a2, 0, 16
 402068ac:	e932e7        	bltu	a2, a14, 40206899 <uart0_tx_buffer+0x15>
-    {
-        uart_tx_one_char(UART0, buf[i]);
-    }
-}
 402068af:	3108      	l32i.n	a0, a1, 12
 402068b1:	21c8      	l32i.n	a12, a1, 8
 402068b3:	11d8      	l32i.n	a13, a1, 4
@@ -9420,34 +9268,17 @@ uart0_tx_buffer(uint8 *buf, uint16 len)
 402068ba:	f00d      	ret.n
 
 402068bc <at_port_print>:
- *                uint16 len - buffer len
- * Returns      :
-*******************************************************************************/
-void ICACHE_FLASH_ATTR
-uart0_sendStr(const char *str)
-{
 402068bc:	f0c112        	addi	a1, a1, -16
 402068bf:	21c9      	s32i.n	a12, a1, 8
 402068c1:	3109      	s32i.n	a0, a1, 12
 402068c3:	02cd      	mov.n	a12, a2
-    while(*str){
 402068c5:	000246        	j	402068d2 <at_port_print+0x16>
-        uart_tx_one_char(UART0, *str++);
 402068c8:	020c      	movi.n	a2, 0
 402068ca:	cc1b      	addi.n	a12, a12, 1
 402068cc:	ffdf01        	l32r	a0, 40206848 <uart_config+0x124>
 402068cf:	0000c0        	callx0	a0
- * Returns      :
-*******************************************************************************/
-void ICACHE_FLASH_ATTR
-uart0_sendStr(const char *str)
-{
-    while(*str){
 402068d2:	000c32        	l8ui	a3, a12, 0
 402068d5:	fef356        	bnez	a3, 402068c8 <at_port_print+0xc>
-        uart_tx_one_char(UART0, *str++);
-    }
-}
 402068d8:	3108      	l32i.n	a0, a1, 12
 402068da:	21c8      	l32i.n	a12, a1, 8
 402068dc:	10c112        	addi	a1, a1, 16
@@ -9459,86 +9290,28 @@ uart0_sendStr(const char *str)
 402068eb:	3f          	.byte 0x3f
 
 402068ec <uart_init>:
-    }
-}
-
-void ICACHE_FLASH_ATTR
-uart_init(UartBautRate uart0_br, UartBautRate uart1_br)
-{
 402068ec:	f0c112        	addi	a1, a1, -16
-    /*this is a example to process uart data from task,please change the priority to fit your application task if exists*/
-    system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
 402068ef:	fffe41        	l32r	a4, 402068e8 <at_port_print+0x2c>
-    }
-}
-
-void ICACHE_FLASH_ATTR
-uart_init(UartBautRate uart0_br, UartBautRate uart1_br)
-{
 402068f2:	01e9      	s32i.n	a14, a1, 0
 402068f4:	02ed      	mov.n	a14, a2
-    /*this is a example to process uart data from task,please change the priority to fit your application task if exists*/
-    system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
 402068f6:	fffb21        	l32r	a2, 402068e4 <at_port_print+0x28>
 402068f9:	a50c      	movi.n	a5, 10
-    }
-}
-
-void ICACHE_FLASH_ATTR
-uart_init(UartBautRate uart0_br, UartBautRate uart1_br)
-{
 402068fb:	11d9      	s32i.n	a13, a1, 4
 402068fd:	03dd      	mov.n	a13, a3
-    /*this is a example to process uart data from task,please change the priority to fit your application task if exists*/
-    system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
 402068ff:	030c      	movi.n	a3, 0
-    }
-}
-
-void ICACHE_FLASH_ATTR
-uart_init(UartBautRate uart0_br, UartBautRate uart1_br)
-{
 40206901:	3109      	s32i.n	a0, a1, 12
 40206903:	21c9      	s32i.n	a12, a1, 8
-    /*this is a example to process uart data from task,please change the priority to fit your application task if exists*/
-    system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
 40206905:	ff1e45        	call0	40205aec <system_os_task>
-    
-    UartDev.baut_rate = uart0_br;
 40206908:	ff7ec1        	l32r	a12, 40206700 <gpio16_input_get+0x20>
-    uart_config(UART0);
 4020690b:	020c      	movi.n	a2, 0
-uart_init(UartBautRate uart0_br, UartBautRate uart1_br)
-{
-    /*this is a example to process uart data from task,please change the priority to fit your application task if exists*/
-    system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
-    
-    UartDev.baut_rate = uart0_br;
 4020690d:	0ce9      	s32i.n	a14, a12, 0
-    uart_config(UART0);
 4020690f:	ffe145        	call0	40206724 <uart_config>
-    UartDev.baut_rate = uart1_br;
-    uart_config(UART1);
 40206912:	120c      	movi.n	a2, 1
-    /*this is a example to process uart data from task,please change the priority to fit your application task if exists*/
-    system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
-    
-    UartDev.baut_rate = uart0_br;
-    uart_config(UART0);
-    UartDev.baut_rate = uart1_br;
 40206914:	0cd9      	s32i.n	a13, a12, 0
-    uart_config(UART1);
 40206916:	ffe0c5        	call0	40206724 <uart_config>
-    ETS_UART_INTR_ENABLE();
 40206919:	022c      	movi.n	a2, 32
 4020691b:	e9c501        	l32r	a0, 40201030 <_irom0_text_start+0x20>
 4020691e:	0000c0        	callx0	a0
-    #if UART_SELFTEST&UART_BUFF_EN
-    os_timer_disarm(&buff_timer_t);
-    os_timer_setfn(&buff_timer_t, uart_test_rx , NULL);   //a demo to process the data in uart rx buffer
-    os_timer_arm(&buff_timer_t,10,1);
-    #endif
-}
 40206921:	3108      	l32i.n	a0, a1, 12
 40206923:	21c8      	l32i.n	a12, a1, 8
 40206925:	11d8      	l32i.n	a13, a1, 4
@@ -9549,31 +9322,11 @@ uart_init(UartBautRate uart0_br, UartBautRate uart1_br)
 40206931:	0001c2        	l8ui	a12, a1, 0
 
 40206934 <uart_reattach>:
-
-void ICACHE_FLASH_ATTR
-uart_reattach()
-{
-    uart_init(BIT_RATE_115200, BIT_RATE_115200);
 40206934:	ffff31        	l32r	a3, 40206930 <uart_init+0x44>
-    #endif
-}
-
-void ICACHE_FLASH_ATTR
-uart_reattach()
-{
 40206937:	f0c112        	addi	a1, a1, -16
-    uart_init(BIT_RATE_115200, BIT_RATE_115200);
 4020693a:	032d      	mov.n	a2, a3
-    #endif
-}
-
-void ICACHE_FLASH_ATTR
-uart_reattach()
-{
 4020693c:	3109      	s32i.n	a0, a1, 12
-    uart_init(BIT_RATE_115200, BIT_RATE_115200);
 4020693e:	fffac5        	call0	402068ec <uart_init>
-}
 40206941:	3108      	l32i.n	a0, a1, 12
 40206943:	10c112        	addi	a1, a1, 16
 40206946:	f00d      	ret.n
@@ -9581,44 +9334,22 @@ uart_reattach()
 4020694a:	124010        	excw
 
 4020694c <uart0_write_char_no_wait>:
-}
-
-//os_printf output to fifo or to the tx buffer
-LOCAL void ICACHE_FLASH_ATTR
-uart0_write_char_no_wait(char c)
-{
 4020694c:	f0c112        	addi	a1, a1, -16
 4020694f:	21c9      	s32i.n	a12, a1, 8
 40206951:	3109      	s32i.n	a0, a1, 12
 40206953:	74c020        	extui	a12, a2, 0, 8
-    
-    }else{
-        tx_buff_enq(&c,1);
-    }
-#else //send to uart tx buffer
-    if (c == '\n'){
 40206956:	0f9c66        	bnei	a12, 10, 40206969 <uart0_write_char_no_wait+0x1d>
-        uart_tx_one_char_no_wait(UART0, '\r');
 40206959:	d30c      	movi.n	a3, 13
 4020695b:	00a022        	movi	a2, 0
 4020695e:	fffa01        	l32r	a0, 40206948 <uart_reattach+0x14>
 40206961:	0000c0        	callx0	a0
 40206964:	000186        	j	4020696e <uart0_write_char_no_wait+0x22>
 40206967:	0c0000        	excw
-        uart_tx_one_char_no_wait(UART0, '\n');
-    }else if (c == '\r'){
 4020696a:	1c27d2        	l32i	a13, a7, 112
 4020696d:	0c09      	s32i.n	a0, a12, 0
-    
-    }
-    else{
-        uart_tx_one_char_no_wait(UART0, c);
 4020696f:	0c3d02        	excw
 40206972:	fff501        	l32r	a0, 40206948 <uart_reattach+0x14>
 40206975:	0000c0        	callx0	a0
-    }
-#endif
-}
 40206978:	3108      	l32i.n	a0, a1, 12
 4020697a:	21c8      	l32i.n	a12, a1, 8
 4020697c:	10c112        	addi	a1, a1, 16
@@ -9631,82 +9362,35 @@ uart0_write_char_no_wait(char c)
 4020698f:	c11240        	mul16u	a1, a2, a4
 
 40206990 <uart_recvTask>:
-}
-#endif
-
-LOCAL void ICACHE_FLASH_ATTR ///////
-uart_recvTask(os_event_t *events)
-{
 40206990:	f0c112        	addi	a1, a1, -16
 40206993:	21c9      	s32i.n	a12, a1, 8
-    if(events->sig == 0){
 40206995:	02c8      	l32i.n	a12, a2, 0
-}
-#endif
-
-LOCAL void ICACHE_FLASH_ATTR ///////
-uart_recvTask(os_event_t *events)
-{
 40206997:	3109      	s32i.n	a0, a1, 12
 40206999:	11d9      	s32i.n	a13, a1, 4
-    if(events->sig == 0){
 4020699b:	bcfc      	bnez.n	a12, 402069da <uart_recvTask+0x4a>
-    #if  UART_BUFF_EN  
-        Uart_rx_buff_enq();
-    #else
-        uint8 fifo_len = (READ_PERI_REG(UART_STATUS(UART0))>>UART_RXFIFO_CNT_S)&UART_RXFIFO_CNT;
 4020699d:	fff921        	l32r	a2, 40206984 <uart0_write_char_no_wait+0x38>
 402069a0:	0020c0        	memw
 402069a3:	02d8      	l32i.n	a13, a2, 0
 402069a5:	74d0d0        	extui	a13, a13, 0, 8
 402069a8:	000606        	j	402069c4 <uart_recvTask+0x34>
 402069ab:	f72100        	excw
-        uint8 d_tmp = 0;
-        uint8 idx=0;
-        for(idx=0;idx<fifo_len;idx++) {
-            d_tmp = READ_PERI_REG(UART_FIFO(UART0)) & 0xFF;
 402069ae:	ff          	.byte 0xff
-        Uart_rx_buff_enq();
-    #else
-        uint8 fifo_len = (READ_PERI_REG(UART_STATUS(UART0))>>UART_RXFIFO_CNT_S)&UART_RXFIFO_CNT;
-        uint8 d_tmp = 0;
-        uint8 idx=0;
-        for(idx=0;idx<fifo_len;idx++) {
 402069af:	cc1b      	addi.n	a12, a12, 1
-            d_tmp = READ_PERI_REG(UART_FIFO(UART0)) & 0xFF;
 402069b1:	0020c0        	memw
 402069b4:	0238      	l32i.n	a3, a2, 0
-            uart_tx_one_char(UART0, d_tmp);
 402069b6:	020c      	movi.n	a2, 0
 402069b8:	743030        	extui	a3, a3, 0, 8
 402069bb:	ffa301        	l32r	a0, 40206848 <uart_config+0x124>
 402069be:	0000c0        	callx0	a0
-        Uart_rx_buff_enq();
-    #else
-        uint8 fifo_len = (READ_PERI_REG(UART_STATUS(UART0))>>UART_RXFIFO_CNT_S)&UART_RXFIFO_CNT;
-        uint8 d_tmp = 0;
-        uint8 idx=0;
-        for(idx=0;idx<fifo_len;idx++) {
 402069c1:	74c0c0        	extui	a12, a12, 0, 8
 402069c4:	e43cd7        	bltu	a12, a13, 402069ac <uart_recvTask+0x1c>
-            d_tmp = READ_PERI_REG(UART_FIFO(UART0)) & 0xFF;
-            uart_tx_one_char(UART0, d_tmp);
-        }
-        WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR|UART_RXFIFO_TOUT_INT_CLR);
 402069c7:	ff5621        	l32r	a2, 40206720 <gpio16_input_get+0x40>
 402069ca:	01a132        	movi	a3, 0x101
 402069cd:	0020c0        	memw
 402069d0:	0239      	s32i.n	a3, a2, 0
-        uart_rx_intr_enable(UART0);
 402069d2:	020c      	movi.n	a2, 0
 402069d4:	ffee01        	l32r	a0, 4020698c <uart0_write_char_no_wait+0x40>
 402069d7:	0000c0        	callx0	a0
-        //tx_start_uart_buffer(UART0);
-    #else 
-    
-    #endif
-    }
-}
 402069da:	3108      	l32i.n	a0, a1, 12
 402069dc:	21c8      	l32i.n	a12, a1, 8
 402069de:	11d8      	l32i.n	a13, a1, 4
@@ -9715,14 +9399,7 @@ uart_recvTask(os_event_t *events)
 402069e5:	000000        	ill
 
 402069e8 <UART_SetWordLength>:
-    }
-}
-
-void ICACHE_FLASH_ATTR
-UART_SetWordLength(uint8 uart_no, UartBitsNum4Char len) 
-{
 402069e8:	742020        	extui	a2, a2, 0, 8
-    SET_PERI_REG_BITS(UART_CONF0(uart_no),UART_BIT_NUM,len,UART_BIT_NUM_S);
 402069eb:	1142c0        	slli	a4, a2, 4
 402069ee:	c02420        	sub	a2, a4, a2
 402069f1:	ff4541        	l32r	a4, 40206708 <gpio16_input_get+0x28>
@@ -9739,13 +9416,7 @@ UART_SetWordLength(uint8 uart_no, UartBitsNum4Char len)
 40206a0e:	f00d      	ret.n
 
 40206a10 <UART_SetStopBits>:
-}
-
-void ICACHE_FLASH_ATTR
-UART_SetStopBits(uint8 uart_no, UartStopBitsNum bit_num) 
-{
 40206a10:	742020        	extui	a2, a2, 0, 8
-    SET_PERI_REG_BITS(UART_CONF0(uart_no),UART_STOP_BIT_NUM,bit_num,UART_STOP_BIT_NUM_S);
 40206a13:	1142c0        	slli	a4, a2, 4
 40206a16:	c02420        	sub	a2, a4, a2
 40206a19:	ff3b41        	l32r	a4, 40206708 <gpio16_input_get+0x28>
@@ -9766,13 +9437,7 @@ UART_SetStopBits(uint8 uart_no, UartStopBitsNum bit_num)
 40206a3e:	20fe07        	bbsi	a14, 16, 40206a62 <UART_SetLineInverse+0x22>
 
 40206a40 <UART_SetLineInverse>:
-}
-
-void ICACHE_FLASH_ATTR
-UART_SetLineInverse(uint8 uart_no, UART_LineLevelInverse inverse_mask) 
-{
 40206a40:	742020        	extui	a2, a2, 0, 8
-    CLEAR_PERI_REG_MASK(UART_CONF0(uart_no), UART_LINE_INV_MASK);
 40206a43:	1142c0        	slli	a4, a2, 4
 40206a46:	c02420        	sub	a2, a4, a2
 40206a49:	ff2f41        	l32r	a4, 40206708 <gpio16_input_get+0x28>
@@ -9784,7 +9449,6 @@ UART_SetLineInverse(uint8 uart_no, UART_LineLevelInverse inverse_mask)
 40206a59:	104540        	and	a4, a5, a4
 40206a5c:	0020c0        	memw
 40206a5f:	0249      	s32i.n	a4, a2, 0
-    SET_PERI_REG_MASK(UART_CONF0(uart_no), inverse_mask);
 40206a61:	0020c0        	memw
 40206a64:	0248      	l32i.n	a4, a2, 0
 40206a66:	203430        	or	a3, a4, a3
@@ -9793,13 +9457,7 @@ UART_SetLineInverse(uint8 uart_no, UART_LineLevelInverse inverse_mask)
 40206a6e:	f00d      	ret.n
 
 40206a70 <UART_SetParity>:
-}
-
-void ICACHE_FLASH_ATTR
-UART_SetParity(uint8 uart_no, UartParityMode Parity_mode) 
-{
 40206a70:	742020        	extui	a2, a2, 0, 8
-    CLEAR_PERI_REG_MASK(UART_CONF0(uart_no), UART_PARITY |UART_PARITY_EN);
 40206a73:	1142c0        	slli	a4, a2, 4
 40206a76:	c02420        	sub	a2, a4, a2
 40206a79:	ff2341        	l32r	a4, 40206708 <gpio16_input_get+0x28>
@@ -9811,10 +9469,7 @@ UART_SetParity(uint8 uart_no, UartParityMode Parity_mode)
 40206a88:	104540        	and	a4, a5, a4
 40206a8b:	0020c0        	memw
 40206a8e:	0249      	s32i.n	a4, a2, 0
-    if(Parity_mode==NONE_BITS){
 40206a90:	112326        	beqi	a3, 2, 40206aa5 <UART_SetParity+0x35>
-    }else{
-        SET_PERI_REG_MASK(UART_CONF0(uart_no), Parity_mode|UART_PARITY_EN);
 40206a93:	0020c0        	memw
 40206a96:	0248      	l32i.n	a4, a2, 0
 40206a98:	250c      	movi.n	a5, 2
@@ -9826,32 +9481,17 @@ UART_SetParity(uint8 uart_no, UartParityMode Parity_mode)
 	...
 
 40206aa8 <UART_SetBaudrate>:
-    }
-}
-
-void ICACHE_FLASH_ATTR
-UART_SetBaudrate(uint8 uart_no,uint32 baud_rate)
-{
 40206aa8:	f0c112        	addi	a1, a1, -16
 40206aab:	0261c2        	s32i	a12, a1, 8
 40206aae:	74c020        	extui	a12, a2, 0, 8
-    uart_div_modify(uart_no, UART_CLK_FREQ /baud_rate);
 40206ab1:	ff1421        	l32r	a2, 40206704 <gpio16_input_get+0x24>
-    }
-}
-
-void ICACHE_FLASH_ATTR
-UART_SetBaudrate(uint8 uart_no,uint32 baud_rate)
-{
 40206ab4:	3109      	s32i.n	a0, a1, 12
-    uart_div_modify(uart_no, UART_CLK_FREQ /baud_rate);
 40206ab6:	e9b901        	l32r	a0, 4020119c <_irom0_text_start+0x18c>
 40206ab9:	0000c0        	callx0	a0
 40206abc:	023d      	mov.n	a3, a2
 40206abe:	0c2d      	mov.n	a2, a12
 40206ac0:	e95a01        	l32r	a0, 40201028 <_irom0_text_start+0x18>
 40206ac3:	0000c0        	callx0	a0
-}
 40206ac6:	3108      	l32i.n	a0, a1, 12
 40206ac8:	21c8      	l32i.n	a12, a1, 8
 40206aca:	10c112        	addi	a1, a1, 16
@@ -9872,34 +9512,20 @@ UART_SetBaudrate(uint8 uart_no,uint32 baud_rate)
 40206ae7:	ff          	.byte 0xff
 
 40206ae8 <UART_SetFlowCtrl>:
-
-void ICACHE_FLASH_ATTR
-UART_SetFlowCtrl(uint8 uart_no,UART_HwFlowCtrl flow_ctrl,uint8 rx_thresh)
-{
 40206ae8:	742020        	extui	a2, a2, 0, 8
 40206aeb:	747040        	extui	a7, a4, 0, 8
 40206aee:	1152c0        	slli	a5, a2, 4
-    if(flow_ctrl&USART_HardwareFlowControl_RTS){
 40206af1:	4c6307        	bbci	a3, 0, 40206b41 <UART_SetFlowCtrl+0x59>
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDO_U, FUNC_U0RTS);
 40206af4:	fff761        	l32r	a6, 40206ad0 <UART_SetBaudrate+0x28>
 40206af7:	cfae42        	movi	a4, 0xfffffecf
 40206afa:	0020c0        	memw
 40206afd:	0688      	l32i.n	a8, a6, 0
-        SET_PERI_REG_BITS(UART_CONF1(uart_no),UART_RX_FLOW_THRHD,rx_thresh,UART_RX_FLOW_THRHD_S);
 40206aff:	117700        	slli	a7, a7, 16
-
-void ICACHE_FLASH_ATTR
-UART_SetFlowCtrl(uint8 uart_no,UART_HwFlowCtrl flow_ctrl,uint8 rx_thresh)
-{
-    if(flow_ctrl&USART_HardwareFlowControl_RTS){
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDO_U, FUNC_U0RTS);
 40206b02:	104840        	and	a4, a8, a4
 40206b05:	00a182        	movi	a8, 0x100
 40206b08:	204480        	or	a4, a4, a8
 40206b0b:	0020c0        	memw
 40206b0e:	0649      	s32i.n	a4, a6, 0
-        SET_PERI_REG_BITS(UART_CONF1(uart_no),UART_RX_FLOW_THRHD,rx_thresh,UART_RX_FLOW_THRHD_S);
 40206b10:	ff0141        	l32r	a4, 40206714 <gpio16_input_get+0x34>
 40206b13:	c06520        	sub	a6, a5, a2
 40206b16:	116680        	slli	a6, a6, 8
@@ -9911,7 +9537,6 @@ UART_SetFlowCtrl(uint8 uart_no,UART_HwFlowCtrl flow_ctrl,uint8 rx_thresh)
 40206b26:	204870        	or	a4, a8, a7
 40206b29:	0020c0        	memw
 40206b2c:	0649      	s32i.n	a4, a6, 0
-        SET_PERI_REG_MASK(UART_CONF1(uart_no), UART_RX_FLOW_EN);
 40206b2e:	0020c0        	memw
 40206b31:	0678      	l32i.n	a7, a6, 0
 40206b33:	ffe941        	l32r	a4, 40206ad8 <UART_SetBaudrate+0x30>
@@ -9919,8 +9544,6 @@ UART_SetFlowCtrl(uint8 uart_no,UART_HwFlowCtrl flow_ctrl,uint8 rx_thresh)
 40206b39:	0020c0        	memw
 40206b3c:	0649      	s32i.n	a4, a6, 0
 40206b3e:	000686        	j	40206b5c <UART_SetFlowCtrl+0x74>
-    }else{
-        CLEAR_PERI_REG_MASK(UART_CONF1(uart_no), UART_RX_FLOW_EN);
 40206b41:	fef461        	l32r	a6, 40206714 <gpio16_input_get+0x34>
 40206b44:	c04520        	sub	a4, a5, a2
 40206b47:	114480        	slli	a4, a4, 8
@@ -9931,28 +9554,17 @@ UART_SetFlowCtrl(uint8 uart_no,UART_HwFlowCtrl flow_ctrl,uint8 rx_thresh)
 40206b54:	106760        	and	a6, a7, a6
 40206b57:	0020c0        	memw
 40206b5a:	0469      	s32i.n	a6, a4, 0
-    }
-    if(flow_ctrl&USART_HardwareFlowControl_CTS){
 40206b5c:	316317        	bbci	a3, 1, 40206b91 <UART_SetFlowCtrl+0xa9>
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTCK_U, FUNC_UART0_CTS);
 40206b5f:	ffe031        	l32r	a3, 40206ae0 <UART_SetBaudrate+0x38>
 40206b62:	cfae42        	movi	a4, 0xfffffecf
 40206b65:	0020c0        	memw
 40206b68:	0368      	l32i.n	a6, a3, 0
-        SET_PERI_REG_MASK(UART_CONF0(uart_no), UART_TX_FLOW_EN);
 40206b6a:	c02520        	sub	a2, a5, a2
-        SET_PERI_REG_MASK(UART_CONF1(uart_no), UART_RX_FLOW_EN);
-    }else{
-        CLEAR_PERI_REG_MASK(UART_CONF1(uart_no), UART_RX_FLOW_EN);
-    }
-    if(flow_ctrl&USART_HardwareFlowControl_CTS){
-        PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTCK_U, FUNC_UART0_CTS);
 40206b6d:	104640        	and	a4, a6, a4
 40206b70:	00a162        	movi	a6, 0x100
 40206b73:	204460        	or	a4, a4, a6
 40206b76:	0020c0        	memw
 40206b79:	0349      	s32i.n	a4, a3, 0
-        SET_PERI_REG_MASK(UART_CONF0(uart_no), UART_TX_FLOW_EN);
 40206b7b:	fee331        	l32r	a3, 40206708 <gpio16_input_get+0x28>
 40206b7e:	112280        	slli	a2, a2, 8
 40206b81:	223a      	add.n	a2, a2, a3
@@ -9961,8 +9573,6 @@ UART_SetFlowCtrl(uint8 uart_no,UART_HwFlowCtrl flow_ctrl,uint8 rx_thresh)
 40206b88:	eecd31        	l32r	a3, 402026bc <system_upgrade_flag_check+0x10>
 40206b8b:	203430        	or	a3, a4, a3
 40206b8e:	000546        	j	40206ba7 <UART_SetFlowCtrl+0xbf>
-    }else{
-        CLEAR_PERI_REG_MASK(UART_CONF0(uart_no), UART_TX_FLOW_EN);
 40206b91:	fedd31        	l32r	a3, 40206708 <gpio16_input_get+0x28>
 40206b94:	c02520        	sub	a2, a5, a2
 40206b97:	112280        	slli	a2, a2, 8
@@ -9979,12 +9589,6 @@ UART_SetFlowCtrl(uint8 uart_no,UART_HwFlowCtrl flow_ctrl,uint8 rx_thresh)
 40206bb3:	c11260        	mul16u	a1, a2, a6
 
 40206bb4 <UART_WaitTxFifoEmpty>:
-    }
-}
-
-void ICACHE_FLASH_ATTR
-UART_WaitTxFifoEmpty(uint8 uart_no , uint32 time_out_us) //do not use if tx flow control enabled
-{
 40206bb4:	f0c112        	addi	a1, a1, -16
 40206bb7:	21c9      	s32i.n	a12, a1, 8
 40206bb9:	11d9      	s32i.n	a13, a1, 4
@@ -9992,46 +9596,27 @@ UART_WaitTxFifoEmpty(uint8 uart_no , uint32 time_out_us) //do not use if tx flow
 40206bbe:	01e9      	s32i.n	a14, a1, 0
 40206bc0:	3109      	s32i.n	a0, a1, 12
 40206bc2:	03dd      	mov.n	a13, a3
-    uint32 t_s = system_get_time();
 40206bc4:	e9f101        	l32r	a0, 40201388 <wdt_init+0xa4>
 40206bc7:	0000c0        	callx0	a0
 40206bca:	02ed      	mov.n	a14, a2
-    while (READ_PERI_REG(UART_STATUS(uart_no)) & (UART_TXFIFO_CNT << UART_TXFIFO_CNT_S)){
 40206bcc:	112cc0        	slli	a2, a12, 4
 40206bcf:	c0c2c0        	sub	a12, a2, a12
 40206bd2:	ff6c21        	l32r	a2, 40206984 <uart0_write_char_no_wait+0x38>
 40206bd5:	11cc80        	slli	a12, a12, 8
 40206bd8:	cc2a      	add.n	a12, a12, a2
 40206bda:	000586        	j	40206bf4 <UART_WaitTxFifoEmpty+0x40>
-		
-        if(( system_get_time() - t_s )> time_out_us){
 40206bdd:	e9ea01        	l32r	a0, 40201388 <wdt_init+0xa4>
 40206be0:	0000c0        	callx0	a0
 40206be3:	c022e0        	sub	a2, a2, a14
 40206be6:	163d27        	bltu	a13, a2, 40206c00 <UART_WaitTxFifoEmpty+0x4c>
-            break;
-        }
-	WRITE_PERI_REG(0X60000914, 0X73);//WTD
 40206be9:	fff131        	l32r	a3, 40206bb0 <UART_SetFlowCtrl+0xc8>
 40206bec:	73a022        	movi	a2, 115
 40206bef:	0020c0        	memw
 40206bf2:	0329      	s32i.n	a2, a3, 0
-
-void ICACHE_FLASH_ATTR
-UART_WaitTxFifoEmpty(uint8 uart_no , uint32 time_out_us) //do not use if tx flow control enabled
-{
-    uint32 t_s = system_get_time();
-    while (READ_PERI_REG(UART_STATUS(uart_no)) & (UART_TXFIFO_CNT << UART_TXFIFO_CNT_S)){
 40206bf4:	0020c0        	memw
 40206bf7:	002c22        	l32i	a2, a12, 0
 40206bfa:	e9e231        	l32r	a3, 40201384 <wdt_init+0xa0>
 40206bfd:	dc8237        	bany	a2, a3, 40206bdd <UART_WaitTxFifoEmpty+0x29>
-            break;
-        }
-	WRITE_PERI_REG(0X60000914, 0X73);//WTD
-
-    }
-}
 40206c00:	3108      	l32i.n	a0, a1, 12
 40206c02:	21c8      	l32i.n	a12, a1, 8
 40206c04:	11d8      	l32i.n	a13, a1, 4
@@ -10041,11 +9626,6 @@ UART_WaitTxFifoEmpty(uint8 uart_no , uint32 time_out_us) //do not use if tx flow
 40206c0d:	000000        	ill
 
 40206c10 <UART_CheckOutputFinished>:
-
-
-bool ICACHE_FLASH_ATTR
-UART_CheckOutputFinished(uint8 uart_no, uint32 time_out_us)
-{
 40206c10:	e0c112        	addi	a1, a1, -32
 40206c13:	61c9      	s32i.n	a12, a1, 24
 40206c15:	51d9      	s32i.n	a13, a1, 20
@@ -10054,73 +9634,30 @@ UART_CheckOutputFinished(uint8 uart_no, uint32 time_out_us)
 40206c1c:	31f9      	s32i.n	a15, a1, 12
 40206c1e:	7109      	s32i.n	a0, a1, 28
 40206c20:	20d330        	or	a13, a3, a3
-    uint32 t_start = system_get_time();
 40206c23:	e9d901        	l32r	a0, 40201388 <wdt_init+0xa4>
 40206c26:	0000c0        	callx0	a0
 40206c29:	02fd      	mov.n	a15, a2
-    uint8 tx_fifo_len;
-    uint32 tx_buff_len;
-    while(1){
-        tx_fifo_len =( (READ_PERI_REG(UART_STATUS(uart_no))>>UART_TXFIFO_CNT_S)&UART_TXFIFO_CNT);
 40206c2b:	112cc0        	slli	a2, a12, 4
 40206c2e:	c0c2c0        	sub	a12, a2, a12
 40206c31:	ff5421        	l32r	a2, 40206984 <uart0_write_char_no_wait+0x38>
 40206c34:	11cc80        	slli	a12, a12, 8
 40206c37:	cc2a      	add.n	a12, a12, a2
-            return TRUE;
-        }
-        if( system_get_time() - t_start > time_out_us){
-            return FALSE;
-        }
-	WRITE_PERI_REG(0X60000914, 0X73);//WTD
 40206c39:	73a0e2        	movi	a14, 115
-{
-    uint32 t_start = system_get_time();
-    uint8 tx_fifo_len;
-    uint32 tx_buff_len;
-    while(1){
-        tx_fifo_len =( (READ_PERI_REG(UART_STATUS(uart_no))>>UART_TXFIFO_CNT_S)&UART_TXFIFO_CNT);
 40206c3c:	0020c0        	memw
 40206c3f:	0c28      	l32i.n	a2, a12, 0
-            tx_buff_len = ((pTxBuffer->UartBuffSize)-(pTxBuffer->Space));
-        }else{
-            tx_buff_len = 0;
-        }
-		
-        if( tx_fifo_len==0 && tx_buff_len==0){
 40206c41:	752020        	extui	a2, a2, 16, 8
 40206c44:	529c      	beqz.n	a2, 40206c5d <UART_CheckOutputFinished+0x4d>
-            return TRUE;
-        }
-        if( system_get_time() - t_start > time_out_us){
 40206c46:	e9d001        	l32r	a0, 40201388 <wdt_init+0xa4>
 40206c49:	0000c0        	callx0	a0
 40206c4c:	c022f0        	sub	a2, a2, a15
 40206c4f:	0f3d27        	bltu	a13, a2, 40206c62 <UART_CheckOutputFinished+0x52>
-            return FALSE;
-        }
-	WRITE_PERI_REG(0X60000914, 0X73);//WTD
 40206c52:	ffd721        	l32r	a2, 40206bb0 <UART_SetFlowCtrl+0xc8>
 40206c55:	0020c0        	memw
 40206c58:	02e9      	s32i.n	a14, a2, 0
-    }    
 40206c5a:	fff786        	j	40206c3c <UART_CheckOutputFinished+0x2c>
-        }else{
-            tx_buff_len = 0;
-        }
-		
-        if( tx_fifo_len==0 && tx_buff_len==0){
-            return TRUE;
 40206c5d:	120c      	movi.n	a2, 1
 40206c5f:	000046        	j	40206c64 <UART_CheckOutputFinished+0x54>
-        }
-        if( system_get_time() - t_start > time_out_us){
-            return FALSE;
 40206c62:	020c      	movi.n	a2, 0
-        }
-	WRITE_PERI_REG(0X60000914, 0X73);//WTD
-    }    
-}
 40206c64:	7108      	l32i.n	a0, a1, 28
 40206c66:	61c8      	l32i.n	a12, a1, 24
 40206c68:	51d8      	l32i.n	a13, a1, 20
@@ -10131,13 +9668,7 @@ UART_CheckOutputFinished(uint8 uart_no, uint32 time_out_us)
 	...
 
 40206c74 <UART_ResetFifo>:
-
-
-void ICACHE_FLASH_ATTR
-UART_ResetFifo(uint8 uart_no)
-{
 40206c74:	742020        	extui	a2, a2, 0, 8
-    SET_PERI_REG_MASK(UART_CONF0(uart_no), UART_RXFIFO_RST | UART_TXFIFO_RST);
 40206c77:	1132c0        	slli	a3, a2, 4
 40206c7a:	c02320        	sub	a2, a3, a2
 40206c7d:	fea231        	l32r	a3, 40206708 <gpio16_input_get+0x28>
@@ -10149,7 +9680,6 @@ UART_ResetFifo(uint8 uart_no)
 40206c8d:	203430        	or	a3, a4, a3
 40206c90:	0020c0        	memw
 40206c93:	0239      	s32i.n	a3, a2, 0
-    CLEAR_PERI_REG_MASK(UART_CONF0(uart_no), UART_RXFIFO_RST | UART_TXFIFO_RST);
 40206c95:	0020c0        	memw
 40206c98:	0248      	l32i.n	a4, a2, 0
 40206c9a:	fe9d31        	l32r	a3, 40206710 <gpio16_input_get+0x30>
@@ -10160,13 +9690,7 @@ UART_ResetFifo(uint8 uart_no)
 	...
 
 40206ca8 <UART_ClearIntrStatus>:
-}
-
-void ICACHE_FLASH_ATTR
-UART_ClearIntrStatus(uint8 uart_no,uint32 clr_mask)
-{
 40206ca8:	742020        	extui	a2, a2, 0, 8
-    WRITE_PERI_REG(UART_INT_CLR(uart_no), clr_mask);
 40206cab:	1142c0        	slli	a4, a2, 4
 40206cae:	c02420        	sub	a2, a4, a2
 40206cb1:	fe9b41        	l32r	a4, 40206720 <gpio16_input_get+0x40>
@@ -10177,13 +9701,7 @@ UART_ClearIntrStatus(uint8 uart_no,uint32 clr_mask)
 40206cbe:	f00d      	ret.n
 
 40206cc0 <UART_SetIntrEna>:
-}
-
-void ICACHE_FLASH_ATTR
-UART_SetIntrEna(uint8 uart_no,uint32 ena_mask)
-{
 40206cc0:	742020        	extui	a2, a2, 0, 8
-    SET_PERI_REG_MASK(UART_INT_ENA(uart_no), ena_mask);
 40206cc3:	1142c0        	slli	a4, a2, 4
 40206cc6:	c02420        	sub	a2, a4, a2
 40206cc9:	fe9441        	l32r	a4, 4020671c <gpio16_input_get+0x3c>
@@ -10203,126 +9721,49 @@ UART_SetIntrEna(uint8 uart_no,uint32 ena_mask)
 40206ced:	400024        	excw
 
 40206cf0 <UART_SetPrintPort>:
-}
-
-
-void ICACHE_FLASH_ATTR
-UART_SetPrintPort(uint8 uart_no)
-{
 40206cf0:	f0c112        	addi	a1, a1, -16
 40206cf3:	3109      	s32i.n	a0, a1, 12
 40206cf5:	742020        	extui	a2, a2, 0, 8
-    if(uart_no==1){
 40206cf8:	051266        	bnei	a2, 1, 40206d01 <UART_SetPrintPort+0x11>
-        os_install_putc1(uart1_write_char);
 40206cfb:	fff921        	l32r	a2, 40206ce0 <UART_SetIntrEna+0x20>
 40206cfe:	0002c6        	j	40206d0d <UART_SetPrintPort+0x1d>
-    }else{
-        /*option 1: do not wait if uart fifo is full,drop current character*/
-        os_install_putc1(uart0_write_char_no_wait);
 40206d01:	fff821        	l32r	a2, 40206ce4 <UART_SetIntrEna+0x24>
 40206d04:	fffa01        	l32r	a0, 40206cec <UART_SetIntrEna+0x2c>
 40206d07:	0000c0        	callx0	a0
-	/*option 2: wait for a while if uart fifo is full*/
-	os_install_putc1(uart0_write_char);
 40206d0a:	fff721        	l32r	a2, 40206ce8 <UART_SetIntrEna+0x28>
 40206d0d:	fff701        	l32r	a0, 40206cec <UART_SetIntrEna+0x2c>
 40206d10:	0000c0        	callx0	a0
-    }
-}
 40206d13:	3108      	l32i.n	a0, a1, 12
 40206d15:	10c112        	addi	a1, a1, 16
 40206d18:	f00d      	ret.n
 	...
 
 40206d1c <uart_init_2>:
-
-
-/*test code*/
-void ICACHE_FLASH_ATTR
-uart_init_2(UartBautRate uart0_br, UartBautRate uart1_br)
-{
 40206d1c:	f0c112        	addi	a1, a1, -16
 40206d1f:	21c9      	s32i.n	a12, a1, 8
-    // rom use 74880 baut_rate, here reinitialize
-    UartDev.baut_rate = uart0_br;
 40206d21:	fe77c1        	l32r	a12, 40206700 <gpio16_input_get+0x20>
-
-
-/*test code*/
-void ICACHE_FLASH_ATTR
-uart_init_2(UartBautRate uart0_br, UartBautRate uart1_br)
-{
 40206d24:	3109      	s32i.n	a0, a1, 12
 40206d26:	11d9      	s32i.n	a13, a1, 4
 40206d28:	01e9      	s32i.n	a14, a1, 0
-    // rom use 74880 baut_rate, here reinitialize
-    UartDev.baut_rate = uart0_br;
-    UartDev.exist_parity = STICK_PARITY_EN;
 40206d2a:	1d0c      	movi.n	a13, 1
-
-
-/*test code*/
-void ICACHE_FLASH_ATTR
-uart_init_2(UartBautRate uart0_br, UartBautRate uart1_br)
-{
 40206d2c:	03ed      	mov.n	a14, a3
-    // rom use 74880 baut_rate, here reinitialize
-    UartDev.baut_rate = uart0_br;
 40206d2e:	0c29      	s32i.n	a2, a12, 0
-    UartDev.exist_parity = STICK_PARITY_EN;
-    UartDev.parity = EVEN_BITS;
-    UartDev.stop_bits = ONE_STOP_BIT;
-    UartDev.data_bits = EIGHT_BITS;
 40206d30:	330c      	movi.n	a3, 3
-uart_init_2(UartBautRate uart0_br, UartBautRate uart1_br)
-{
-    // rom use 74880 baut_rate, here reinitialize
-    UartDev.baut_rate = uart0_br;
-    UartDev.exist_parity = STICK_PARITY_EN;
-    UartDev.parity = EVEN_BITS;
 40206d32:	020c      	movi.n	a2, 0
-    UartDev.stop_bits = ONE_STOP_BIT;
-    UartDev.data_bits = EIGHT_BITS;
 40206d34:	1c39      	s32i.n	a3, a12, 4
-void ICACHE_FLASH_ATTR
-uart_init_2(UartBautRate uart0_br, UartBautRate uart1_br)
-{
-    // rom use 74880 baut_rate, here reinitialize
-    UartDev.baut_rate = uart0_br;
-    UartDev.exist_parity = STICK_PARITY_EN;
 40206d36:	2cd9      	s32i.n	a13, a12, 8
-    UartDev.parity = EVEN_BITS;
 40206d38:	3c29      	s32i.n	a2, a12, 12
-    UartDev.stop_bits = ONE_STOP_BIT;
 40206d3a:	046cd2        	s32i	a13, a12, 16
-    UartDev.data_bits = EIGHT_BITS;
-	
-    uart_config(UART0);
 40206d3d:	ff9e45        	call0	40206724 <uart_config>
-    UartDev.baut_rate = uart1_br;
-    uart_config(UART1);
 40206d40:	0d2d      	mov.n	a2, a13
-    UartDev.parity = EVEN_BITS;
-    UartDev.stop_bits = ONE_STOP_BIT;
-    UartDev.data_bits = EIGHT_BITS;
-	
-    uart_config(UART0);
-    UartDev.baut_rate = uart1_br;
 40206d42:	006ce2        	s32i	a14, a12, 0
-    uart_config(UART1);
 40206d45:	ff9dc5        	call0	40206724 <uart_config>
-    ETS_UART_INTR_ENABLE();
 40206d48:	022c      	movi.n	a2, 32
 40206d4a:	e8b901        	l32r	a0, 40201030 <_irom0_text_start+0x20>
 40206d4d:	0000c0        	callx0	a0
-
-    // install uart1 putc callback
-    os_install_putc1((void *)uart1_write_char);//print output at UART1
 40206d50:	ffe421        	l32r	a2, 40206ce0 <UART_SetIntrEna+0x20>
 40206d53:	ffe601        	l32r	a0, 40206cec <UART_SetIntrEna+0x2c>
 40206d56:	0000c0        	callx0	a0
-}
 40206d59:	3108      	l32i.n	a0, a1, 12
 40206d5b:	21c8      	l32i.n	a12, a1, 8
 40206d5d:	11d8      	l32i.n	a13, a1, 4
@@ -75759,11 +75200,11 @@ uart_init_2(UartBautRate uart0_br, UartBautRate uart1_br)
 4022f830:	000a29 000a00                                 )...
 
 4022f834 <flash_str$2863>:
-4022f834:	00000a 731b00                                 ....
+4022f834:	00000a 650a00                                 ....
 
 4022f838 <flash_str$2843>:
-4022f838:	70731b 363238 722036 207665 746164 253d61     .sp8266 rev data
-4022f848:	73253d 00000a 650000                          =%s.....
+4022f838:	73650a 323870 203636 766572 616420 3d6174     .esp8266 rev dat
+4022f848:	253d61 000a73 650000                          a=%s....
 
 4022f850 <flash_str$2833>:
 4022f850:	707365 363238 775f36 696669 65735f 20646e     esp8266_wifi_sen
@@ -79478,7 +78919,7 @@ void ESP8266_WIFI_Recv_Cb(void *arg, char *pdata, unsigned short len){
 40101c11:	fff301        	l32r	a0, 40101be0 <ESP8266_WIFI_Send_Cb+0x20>
 40101c14:	0000c0        	callx0	a0
 
-	os_printf("\esp8266 rev data=%s\n",pdata);
+	os_printf("\nesp8266 rev data=%s\n",pdata);
 40101c17:	fff021        	l32r	a2, 40101bd8 <ESP8266_WIFI_Send_Cb+0x18>
 40101c1a:	203dd0        	or	a3, a13, a13
 40101c1d:	ffc805        	call0	401018a0 <os_printf_plus>
@@ -79504,7 +78945,7 @@ void ESP8266_WIFI_Recv_Cb(void *arg, char *pdata, unsigned short len){
 		
 	espconn_send(T_arg,"ESP8266_WIFI_Recv_OK",os_strlen("ESP8266_WIFI_Recv_OK"));
 40101c37:	ffe9d1        	l32r	a13, 40101bdc <ESP8266_WIFI_Send_Cb+0x1c>
-	os_printf("\esp8266 rev data=%s\n",pdata);
+	os_printf("\nesp8266 rev data=%s\n",pdata);
 
 	//获取远端信息，获取是谁发的
 	if(espconn_get_connection_info(T_arg,&P_port_info,0)==ESPCONN_OK){
@@ -79552,12 +78993,6 @@ void ESP8266_WIFI_Recv_Cb(void *arg, char *pdata, unsigned short len){
 40101c7d:	600000        	neg	a0, a0
 
 40101c80 <uart_tx_one_char>:
-    uint8 fifo_cnt = (( READ_PERI_REG(UART_STATUS(UART0))>>UART_TXFIFO_CNT_S)& UART_TXFIFO_CNT);
-    if (fifo_cnt < 126) {
-        WRITE_PERI_REG(UART_FIFO(UART0) , TxChar);
-    }
-    return OK;
-}
 40101c80:	742020        	extui	a2, a2, 0, 8
 40101c83:	1142c0        	slli	a4, a2, 4
 40101c86:	c02420        	sub	a2, a4, a2
@@ -79621,34 +79056,17 @@ void ESP8266_WIFI_Recv_Cb(void *arg, char *pdata, unsigned short len){
 40101d16:	f00d      	ret.n
 
 40101d18 <uart1_sendStr_no_wait>:
- * Description  : uart tx a string without waiting for every char, used for print debug info which can be lost
- * Parameters   : const char *str - string to be sent
- * Returns      : NONE
-*******************************************************************************/
-void uart1_sendStr_no_wait(const char *str)
-{
 40101d18:	f0c112        	addi	a1, a1, -16
 40101d1b:	21c9      	s32i.n	a12, a1, 8
 40101d1d:	3109      	s32i.n	a0, a1, 12
 40101d1f:	02cd      	mov.n	a12, a2
-    while(*str){
 40101d21:	000286        	j	40101d2f <uart1_sendStr_no_wait+0x17>
 40101d24:	220000        	excw
-        uart_tx_one_char_no_wait(UART1, *str++);
 40101d27:	c201a0        	excw
 40101d2a:	01cc      	bnez.n	a1, 40101d2e <uart1_sendStr_no_wait+0x16>
 40101d2c:	fffb85        	call0	40101ce8 <uart_tx_one_char_no_wait>
- * Parameters   : const char *str - string to be sent
- * Returns      : NONE
-*******************************************************************************/
-void uart1_sendStr_no_wait(const char *str)
-{
-    while(*str){
 40101d2f:	000c32        	l8ui	a3, a12, 0
 40101d32:	ff0356        	bnez	a3, 40101d26 <uart1_sendStr_no_wait+0xe>
-        uart_tx_one_char_no_wait(UART1, *str++);
-    }
-}
 40101d35:	032102        	l32i	a0, a1, 12
 40101d38:	21c8      	l32i.n	a12, a1, 8
 40101d3a:	10c112        	addi	a1, a1, 16
@@ -79657,15 +79075,7 @@ void uart1_sendStr_no_wait(const char *str)
 40101d42:	206000        	or	a6, a0, a0
 
 40101d44 <uart_rx_intr_disable>:
-
-#endif
-
-
-void uart_rx_intr_disable(uint8 uart_no)
-{
 40101d44:	742020        	extui	a2, a2, 0, 8
-#if 1
-    CLEAR_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_FULL_INT_ENA|UART_RXFIFO_TOUT_INT_ENA);
 40101d47:	1132c0        	slli	a3, a2, 4
 40101d4a:	c02320        	sub	a2, a3, a2
 40101d4d:	fffc31        	l32r	a3, 40101d40 <uart1_sendStr_no_wait+0x28>
@@ -79687,123 +79097,55 @@ void uart_rx_intr_disable(uint8 uart_no)
 40101d77:	3f          	.byte 0x3f
 
 40101d78 <uart0_rx_intr_handler>:
-    
-    	/*ATTENTION:*/
-	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
-	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
-	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
-    if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
 40101d78:	fffc21        	l32r	a2, 40101d68 <uart_rx_intr_disable+0x24>
- * Parameters   : void *para - point to ETS_UART_INTR_ATTACH's arg
- * Returns      : NONE
-*******************************************************************************/
-LOCAL void
-uart0_rx_intr_handler(void *para)
-{
 40101d7b:	f0c112        	addi	a1, a1, -16
 40101d7e:	0161d2        	s32i	a13, a1, 4
-    
-    	/*ATTENTION:*/
-	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
-	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
-	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
-    if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
 40101d81:	0020c0        	memw
 40101d84:	0022d2        	l32i	a13, a2, 0
- * Parameters   : void *para - point to ETS_UART_INTR_ATTACH's arg
- * Returns      : NONE
-*******************************************************************************/
-LOCAL void
-uart0_rx_intr_handler(void *para)
-{
 40101d87:	0261c2        	s32i	a12, a1, 8
-    
-    	/*ATTENTION:*/
-	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
-	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
-	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
-    if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
 40101d8a:	8c0c      	movi.n	a12, 8
- * Parameters   : void *para - point to ETS_UART_INTR_ATTACH's arg
- * Returns      : NONE
-*******************************************************************************/
-LOCAL void
-uart0_rx_intr_handler(void *para)
-{
 40101d8c:	3109      	s32i.n	a0, a1, 12
-    
-    	/*ATTENTION:*/
-	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
-	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
-	/*IF NOT , POST AN EVENT AND PROCESS IN SYSTEM TASK */
-    if(UART_FRM_ERR_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_FRM_ERR_INT_ST)){
 40101d8e:	10ddc0        	and	a13, a13, a12
 40101d91:	fd8c      	beqz.n	a13, 40101da4 <uart0_rx_intr_handler+0x2c>
-        DBG1("FRM_ERR\r\n");
 40101d93:	fff621        	l32r	a2, 40101d6c <uart_rx_intr_disable+0x28>
 40101d96:	fff805        	call0	40101d18 <uart1_sendStr_no_wait>
-        WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
 40101d99:	fff521        	l32r	a2, 40101d70 <uart_rx_intr_disable+0x2c>
 40101d9c:	0020c0        	memw
 40101d9f:	02c9      	s32i.n	a12, a2, 0
 40101da1:	0023c6        	j	40101e34 <uart0_rx_intr_handler+0xbc>
-    }else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
 40101da4:	0020c0        	memw
 40101da7:	02c8      	l32i.n	a12, a2, 0
 40101da9:	04c0c0        	extui	a12, a12, 0, 1
 40101dac:	019c16        	beqz	a12, 40101dc9 <uart0_rx_intr_handler+0x51>
-        DBG("f");
-        uart_rx_intr_disable(UART0);
 40101daf:	0d2d      	mov.n	a2, a13
 40101db1:	fff905        	call0	40101d44 <uart_rx_intr_disable>
-        WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
 40101db4:	ffef21        	l32r	a2, 40101d70 <uart_rx_intr_disable+0x2c>
 40101db7:	130c      	movi.n	a3, 1
 40101db9:	0020c0        	memw
 40101dbc:	0239      	s32i.n	a3, a2, 0
-        system_os_post(uart_recvTaskPrio, 0, 0);
 40101dbe:	0d4d      	mov.n	a4, a13
 40101dc0:	0d2d      	mov.n	a2, a13
 40101dc2:	0d3d      	mov.n	a3, a13
 40101dc4:	000846        	j	40101de9 <uart0_rx_intr_handler+0x71>
 40101dc7:	c00000        	sub	a0, a0, a0
-    }else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
 40101dca:	320020        	excw
 40101dcd:	d20022        	l8ui	a2, a0, 210
 40101dd0:	d700a1        	l32r	a10, 400f79d0 <__floatsidf+0xe96e0>
 40101dd3:	c01a03        	excw
-        DBG("t");
-        uart_rx_intr_disable(UART0);
 40101dd6:	202c      	movi.n	a0, 34
 40101dd8:	fff685        	call0	40101d44 <uart_rx_intr_disable>
-        WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
 40101ddb:	ffe521        	l32r	a2, 40101d70 <uart_rx_intr_disable+0x2c>
-        system_os_post(uart_recvTaskPrio, 0, 0);
 40101dde:	0c3d      	mov.n	a3, a12
-        WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
-        system_os_post(uart_recvTaskPrio, 0, 0);
-    }else if(UART_RXFIFO_TOUT_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_TOUT_INT_ST)){
-        DBG("t");
-        uart_rx_intr_disable(UART0);
-        WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_TOUT_INT_CLR);
 40101de0:	0020c0        	memw
 40101de3:	02d9      	s32i.n	a13, a2, 0
-        system_os_post(uart_recvTaskPrio, 0, 0);
 40101de5:	0c4d      	mov.n	a4, a12
 40101de7:	0c2d      	mov.n	a2, a12
 40101de9:	ffcec5        	call0	40101ad8 <system_os_post>
 40101dec:	001106        	j	40101e34 <uart0_rx_intr_handler+0xbc>
 40101def:	20c000        	or	a12, a0, a0
-    }else if(UART_TXFIFO_EMPTY_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_TXFIFO_EMPTY_INT_ST)){
 40101df2:	024800        	excw
 40101df5:	230c      	movi.n	a3, 2
 40101df7:	1e0437        	bnone	a4, a3, 40101e19 <uart0_rx_intr_handler+0xa1>
-	/* to output uart data from uart buffer directly in empty interrupt handler*/
-	/*instead of processing in system event, in order not to wait for current task/function to quit */
-	/*ATTENTION:*/
-	/*IN NON-OS VERSION SDK, DO NOT USE "ICACHE_FLASH_ATTR" FUNCTIONS IN THE WHOLE HANDLER PROCESS*/
-	/*ALL THE FUNCTIONS CALLED IN INTERRUPT HANDLER MUST BE DECLARED IN RAM */
-	CLEAR_PERI_REG_MASK(UART_INT_ENA(UART0), UART_TXFIFO_EMPTY_INT_ENA);
 40101dfa:	ffd121        	l32r	a2, 40101d40 <uart1_sendStr_no_wait+0x28>
 40101dfd:	d47c      	movi.n	a4, -3
 40101dff:	0020c0        	memw
@@ -79811,33 +79153,21 @@ uart0_rx_intr_handler(void *para)
 40101e04:	104540        	and	a4, a5, a4
 40101e07:	0020c0        	memw
 40101e0a:	0249      	s32i.n	a4, a2, 0
-	#if UART_BUFF_EN
-		tx_start_uart_buffer(UART0);
-	#endif
-        //system_os_post(uart_recvTaskPrio, 1, 0);
-        WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_TXFIFO_EMPTY_INT_CLR);
 40101e0c:	ffd921        	l32r	a2, 40101d70 <uart_rx_intr_disable+0x2c>
 40101e0f:	0020c0        	memw
 40101e12:	0239      	s32i.n	a3, a2, 0
 40101e14:	000706        	j	40101e34 <uart0_rx_intr_handler+0xbc>
 40101e17:	c00000        	sub	a0, a0, a0
-        
-    }else if(UART_RXFIFO_OVF_INT_ST  == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_OVF_INT_ST)){
 40101e1a:	320020        	excw
 40101e1d:	220022        	l8ui	a2, a0, 34
 40101e20:	2710a0        	excw
 40101e23:	310e03        	excw
-        WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_RXFIFO_OVF_INT_CLR);
 40101e26:	c0ffd2        	excw
 40101e29:	220020        	excw
 40101e2c:	210063        	excw
-        DBG1("RX OVF!!\r\n");
 40101e2f:	45ffd1        	l32r	a13, 400d362c <__floatsidf+0xc533c>
 40101e32:	ee          	.byte 0xee
 40101e33:	ff          	.byte 0xff
-    }
-
-}
 40101e34:	3108      	l32i.n	a0, a1, 12
 40101e36:	21c8      	l32i.n	a12, a1, 8
 40101e38:	11d8      	l32i.n	a13, a1, 4
@@ -79846,15 +79176,7 @@ uart0_rx_intr_handler(void *para)
 	...
 
 40101e40 <uart_rx_intr_enable>:
-    ETS_UART_INTR_DISABLE();
-#endif
-}
-
-void uart_rx_intr_enable(uint8 uart_no)
-{
 40101e40:	742020        	extui	a2, a2, 0, 8
-#if 1
-    SET_PERI_REG_MASK(UART_INT_ENA(uart_no), UART_RXFIFO_FULL_INT_ENA|UART_RXFIFO_TOUT_INT_ENA);
 40101e43:	1132c0        	slli	a3, a2, 4
 40101e46:	c02320        	sub	a2, a3, a2
 40101e49:	ffbd31        	l32r	a3, 40101d40 <uart1_sendStr_no_wait+0x28>
